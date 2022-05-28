@@ -1,0 +1,28 @@
+SELECT * block_time FROM uniswap_v2."Factory_evt_PairCreated"
+where ('2020-06-05 20:22' > evt_block_time)
+
+// for bonus question 
+WITH
+  show as (
+    SELECT
+      block_time,
+      token_a_symbol as tokenA,
+      token_b_symbol as tokenB,
+      usd_amount
+    FROM
+      dex."trades"
+    WHERE ( project = 'Uniswap' AND version = '2' )
+  
+  )
+SELECT
+tokenA,tokenB,
+  DATE_TRUNC('month', block_time) as monthly,
+  sum(usd_amount) as trade_volume
+from
+  show
+GROUP BY
+  1,2,3
+ORDER BY
+  monthly DESC
+  
+  
