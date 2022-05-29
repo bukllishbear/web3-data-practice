@@ -1,0 +1,60 @@
+// using ethereum.logs
+not working ---( )
+WITH top100holders AS
+(
+    SELECT address, SUM(amount) AS token_amount
+    FROM (
+    
+    SELECT "topic2" AS address, -SUM(data/1e6) AS amount
+    FROM ethereum.logs
+    WHERE contract_address ='\xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48' 
+    GROUP BY 1
+    
+    UNION ALL
+    
+    SELECT "topic3" AS address, SUM(data/1e6) AS amount
+    FROM ethereum.logs
+    WHERE contract_address ='\xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48' 
+    GROUP BY 1
+    
+    ) to_from
+    GROUP BY 1
+    ORDER BY 2 DESC
+    LIMIT 100
+)
+SELECT address,token_amount from top100holders
+GROUP BY 1 ,2
+ORDER BY token_amount DESC
+LIMIT 100
+
+
+
+
+//using erc20."ERC20_evt_Transfer" 
+(working)
+WITH top100holders AS
+(
+    SELECT address, SUM(amount) AS token_amount
+    FROM (
+    
+    SELECT "from" AS address, -SUM(value/1e6) AS amount
+    FROM erc20."ERC20_evt_Transfer"
+    WHERE contract_address ='\xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48' 
+    GROUP BY 1
+    
+    UNION ALL
+    
+    SELECT "to" AS address, SUM(value/1e6) AS amount
+    FROM erc20."ERC20_evt_Transfer"
+    WHERE contract_address ='\xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48' 
+    GROUP BY 1
+    
+    ) to_from
+    GROUP BY 1
+    ORDER BY 2 DESC
+    LIMIT 100
+)
+SELECT address,token_amount from top100holders
+GROUP BY 1 ,2
+ORDER BY token_amount DESC
+LIMIT 100
