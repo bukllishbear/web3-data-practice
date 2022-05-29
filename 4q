@@ -1,0 +1,9 @@
+ERC-20 - fungible trasferable token
+
+going inside the transaction log and finding (Transfer(address,address,uint256)) event ,
+its keccack-256 is  0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef or
+we can find event using above bytea
+
+// bonus question 
+ from https://dune.com/queries/4609/9005 , we can say there are fluctuations
+ https://dune.com/queries/4610/9008 - delegators distribution
