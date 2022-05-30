@@ -58,3 +58,12 @@ SELECT address,token_amount from top100holders
 GROUP BY 1 ,2
 ORDER BY token_amount DESC
 LIMIT 100
+
+
+//bonus question 
+select * from erc20."ERC20_evt_Approval"
+where "contract_address" ='/xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+limit 100
+
+//bonus question 
+55 
