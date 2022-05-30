@@ -1,0 +1,6 @@
+//
+select amount_raw as usdc_eth_lp_amount ,wallet_address as usdc_eth_lp_holders from erc20."token_balances_latest"
+where "token_address" = '\xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc'
+ORDER BY usdc_eth_lp_amount DESC
+
+//bonus question
