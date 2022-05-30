@@ -1,0 +1,36 @@
+WITH
+  history AS (
+    SELECT
+      block_time,
+      project AS Project,
+      SUM(usd_amount) as usd_volume
+    FROM
+      dex."trades"
+    WHERE
+      (
+        token_a_symbol = 'USDC'
+        OR token_b_symbol = 'ETH'
+      )
+      AND (
+        token_a_symbol = 'ETH'
+        OR token_b_symbol = 'USDC'
+      )
+      AND category = 'DEX'
+    GROUP BY
+      1
+  )
+select
+  date_trunc('month', block_time) as month,
+  Project,
+  usd_volume
+from
+  history
+group by
+  1
+order by
+  1 desc
+  
+  
+  
+  //bonus question 
+  
